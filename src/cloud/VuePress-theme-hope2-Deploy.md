@@ -514,82 +514,6 @@ plugins: {
 
 ![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-9b379d0629ac655174377c76c8f00c1d_MD5.jpeg)
 
-
-### 3.4 [搜索](https://theme-hope.vuejs.press/zh/guide/feature/search.html)功能
-
-该主题内置了几种常见搜索插件的支持，你只需下载你喜欢的插件和配置文件即可，我使用的是`vuepress-plugin-search-pro`插件，配置参考的官方配置。
-
-1. 安装 `vuepress-plugin-search-pro`
-
-::: code-tabs#shell
-
-@tab pnpm
-
-```sh
-pnpm add -D vuepress-plugin-search-pro
-```
-
-@tab yarn
-
-```sh
-yarn add -D vuepress-plugin-search-pro
-```
-
-@tab:active
-
-```sh
-npm i -D vuepress-plugin-search-pro
-```
-
-:::
-
-2. 在主题选项中配置 `plugins.searchPro`。
-
-你可以将 `plugins.searchPro` 设置为 `true` 来直接启用它，或者将其设置为一个对象来自定义插件。
-
-%%
-```js
-plugins: [
-    searchProPlugin({
-      // 索引全部内容
-      indexContent: true,
-      // 为分类和标签添加索引
-      customFields: [
-        {
-          getter: (page) => page.frontmatter.category as any,
-          formatter: "分类：$content",
-        },
-        {
-          getter: (page) => page.frontmatter.tag as any,
-          formatter: "标签：$content",
-        },
-      ],
-    }),
-  ]
-
-```
-%%
-
-```js title="\src\.vuepress\config.ts"
-import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
-export default defineUserConfig({
-  theme: hopeTheme({
-    plugins: {
-      searchPro: true,
-      // searchPro: {
-      //   插件选项
-      // },
-    },
-  }),
-});
-
-```
-效果如下：
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-fb8aa9698875c3683416ea56928db52b_MD5.jpeg)
-
 ## 三、使用Git上传到GitHub
 
 ### 1.1 安装git
@@ -793,445 +717,133 @@ git push -f origin <branch name>
 
 [Git 常见错误 之 error: src refspec xxx does not match any / error: failed to push some refs to 简单解决方法\_error: src refspec master does not match any-CSDN博客](https://blog.csdn.net/u014361280/article/details/109703556)
 
-## 四、本地部署
+## 四、开启公网访问
 
-### 1. 运行环境设置
+### 1. 部署到 GitHub Pages
 
-#### ① 编辑器
+#### 1. Base 选项设置
 
-一个方便快捷的编辑器在博客的搭建过程是功不可没的。推荐用VSCode编写和运行VuePress项目
+如果你在使用模板，且在创建过程中选择了创建自动部署文档的 GitHub 工作流，那么你唯一要做的就是在 `docs/.config.js` 中设置正确的 [`base`](https://vuejs.press/zh/reference/config.html#base) 选项。
 
-1. 在[下载界面](https://code.visualstudio.com/)点击左侧的蓝色按钮，选择你的操作系统，并下载。
+- 如果你打算发布到 `https://<USERNAME>.github.io/` 或者自定义域名，则可以省略这一步，因为 `base` 默认即是 `"/"`。
+    
+- 如果你打算发布到 `https://<USERNAME>.github.io/<REPO>/`（也就是说你的仓库在 `https://github.com/<USERNAME>/<REPO>`），则将 `base` 设置为 `"/<REPO>/"`。
+    
+当操作完成后，你应该前往 GitHub 仓库的设置页面，选择 `gh-pages` 作为 GitHub Pages 的源。
+    
+::: warning Github 教程
 
-2. 双击安装包打开，同意用户协议。
-
-3. 在下载过程中 ，请务必**全选**下列选项：
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-2ee74344037e2e7951a0807c042cd89c_MD5.jpeg)
-
-4. 在 VS Code 初次启动后，若未提前安装 Git 可能会提示未找到 Git 软件，忽略即可。
-
-5. 推荐立即执行简体中文扩展安装以保证界面语言为简体中文。操作方法：
-
-	1. 单击左侧导航栏的“Extensions”按钮。
-	2. 在弹出的输入框中输入“chinese”。
-	3. 点击第一个选项卡上的“Install”按钮。若是繁体用户，则应点击第二个选项卡上的“Install”按钮。
-	4. 在下载完成后，左下角会出现弹窗，点击弹窗中的“Change Language and Restart”，等待重启后即安装完毕。
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-c046280014369794e10d2751ecaaf526_MD5.jpeg)
-
-> [!tip]
->当你安装 VS Code 并第一次打开的时候，VS Code 会自动检测当前系统语言并在右下角推荐你安装对应语言的扩展，点击按钮即可自动安装。
-
-#### ② Node.js
-
-> [!Introduce]
-> [Node.js®open in new window](https://nodejs.org/zh-cn/) 是一个基于 [Chrome V8 引擎open in new window](https://v8.dev/) 的 JavaScript 运行时环境。
-
-你需要下载并安装最新的长期维护版。
-
-1. 点击 [下载地址](https://nodejs.org/en) 左侧的绿色按钮 (LTS)。
-
-2. 运行安装包，保持全部默认即可
-
-> [!important]
->如果你真的是个小白，请不要改默认安装目录，以免你在出现问题时找不到对应的文件夹。
-
-Node.js 本身只会占据几十 M 的空间!
-
-#### ③ pnpm
-
-在你安装 Node.js 之后，在终端中输入下列命令启用 corepack:
-
-```shell
-corepack enable
-```
-
-> [!tip]
->我们推荐你使用 pnpm 作为项目管理器，因为 VuePress 和 VuePress Theme Hope 都是通过 pnpm 来管理依赖的。
->
->pnpm 的一些功能可以保证你拥有正确的依赖，并且它能加速安装。
-
-但是如果在使用pnpm安装的时候出现了错误，改为使用npm是一种不赖的选择
-
-### 2. 搭建项目
-
-#### ① 选择项目位置
-
-为了避免偶然间触发一些奇怪的问题，而你自己不会解决，请尽量避免使用包含中文文字、表情符号或空格的文件路径 (不好的例子: `C:\Users\小张\Desktop\VuePress 项目\Hope 主题❤️\`)。
-
-建议使用纯英文路径 (好的例子: `D:\projects\vuepress-theme-hope\`)
-
-#### ② 初始化项目
-
-如果你选择了一个主题，请务必使用该主题提供的脚手架工具创建项目。这样可以减少很多配置上的麻烦。
-
-在选定的文件夹中打开终端。
-
-::: tabs
-
-@tab 在Mac中打开终端
-
-右键点击文件夹，然后选择”New Terminal at Folder”。
-
-@tab 在Ubuntu中打开终端
-
-右键点击文件夹，然后选择”Open in Terminal”。
-
-@tab:active 在Windows中打开终端
-
-使用文件管理器打开对应文件夹，然后在上方的地址栏中输入 `cmd` 并按下回车。
+关于 GitHub 的相关教程，你可以参考 [GitHub 简介](https://mister-hope.com/code/github/)。
 
 :::
 
-::: code-tabs#shell
+::: tip 部署时可能遇到的问题：
 
-@tab pnpm
-
-```shell
-pnpm create vuepress-theme-hope my-docs
+```js
+Dependencies lock file is not found in /home/{username}/runners.../repository_name. Supported file patterns: package-lock.json,yarn.lock
 ```
 
-@tab yarn
+需要修改下`workflows`文件：去除npm cache设置
 
-```shell
-yarn create vuepress-theme-hope my-docs
+```sh
+ - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+        #  cache: npm
 ```
 
-@tab:active npm
-
-```shell
-npm init vuepress-theme-hope my-docs
-```
+cicd执行成功后，会多一个部署`gh-pages`分支。
 
 :::
 
-::: tip 文件夹参数
+部署`gh-pages`分支是文件流中配置的，你可以修改
 
-这里的 `my-docs` 是一个参数，代表 VuePress Theme Hope 项目的文件夹名称，在本教程中，我们将项目生成至当前目录下的 `my-docs` 文件夹。
+```sh
+      - name: 部署文档
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # 这是文档部署到的分支名称
+          branch: gh-pages
+          folder: src/.dist
+```
 
-如果你有需求，你可以更改此参数来使用一个新文件夹名称。
+#### 2. **GitHub Pages 设置**
 
+进入 GitHub Pages 页面：你的仓库 > Seetings > Pages 
+
+选择分支：**“Source”** 选项选择 “Deploy from a branch“，在随后出现的 ”Branch“ 选项中选择 ”gh-pages“，点击 ”Save“
+
+![image.png](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/hope/202501232209592.png)
+
+该设置的意思是，将选中的分支内容部署在github自带的页面服务中。
+
+接着点击`save`按钮，就可以去对应的站点访问了。
+
+### 2. GitHub Pages 使用自定义域名访问
+
+#### 1. 配置DNS解析
+
+新建CNAME记录；”名称“ 输入你准备使用的域名头；“目标” 输入 `<username>.github.io`
+
+![image.png](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/hope/202501232200526.png)
+
+::: details DNS记录类型及含义
+
+|记录类型|含义|
+|---|---|
+|A 记录|将域名指向一个 IPV4 地址（映射 Web 服务器地址）|
+|CNAME 记录|将域名指向另外一个域名（CDN）|
+|AAAA 记录|将域名指向一个 IPV6 地址（类似于 A 记录）NS 记录将子域名指定其他 DNS 服务器解析（解析特定域名的权威 DNS 服务器）|
+|MX 记录|将域名指向邮件服务器地址（邮件路由）|
+|SRV 记录|记录提供特定的服务的服务器（标识 VoIP(Voice over IP)、XMPP(Extensible Messaging and Presence Protocol)服务等）|
+|TXT 记录|存储任意文本信息（域名验证、配置 SPF(Sender Policy Framework)、DKIM(DomainKeys Identified Mail)）|
+|PTR 记录|用于反向 DNS 查找（将 IP 地址解析为域名，用于确定特定 IP 地址所对应的域名）|
+|SOA 记录|指定域名的主要配置信息。包括域名的权威服务器、刷新时间、重试时间等。|
 :::
+#### 2. **GitHub Pages 设置**
 
-::: tip 中文显示
+配置域名：你的仓库 > Seetings > Pages ，在 Custom domain 中填写域名并保存。
 
-如果你的英语很不好，请在第一次选择中通过键盘 `↓` 选择 `简体中文` 并回车来在后续流程中使用中文进行显示。
+![image.png](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/hope/202501232152320.png)
 
-:::
+等待 DNS 检查：当出现 “√DNS check successful” 时，即说明 DNS 检查通过。
 
-::: tip 开发服务器
+即可通过新域名访问网站。
 
-如果你在模板初始化成功后选择立即启动开发服务器，稍等片刻，你就可以在浏览器地址栏输入 `localhost:8080/` 访问开发服务器了。
+1. 购买域名并配置DNS（以cloudflare为例）
 
-:::
+2. 点进自己域名，并添加DNS记录
 
-```js title="output"
-Need to install the following packages:
-	create-vuepress-theme-hope@2.0.0-beta.233 
-Ok to proceed? (y) y
-? Select a language to display / 选择显示语言 简体中文
-? 选择包管理器 npm
-? 你想要使用哪个打包器？ vite
-生成 package.json...
-? 设置应用名称 shenb-blog
-? 设置应用版本号 2.0.0
-? 设置应用描述 A project of vuepress-theme-hope
-? 设置协议 MIT
-? 项目需要用到多语言么？ No
-? 是否需要一个自动部署文档到 GitHub Pages 的工作流？ Yes
-? 你想要创建什么类型的项目？ blog
-生成模板...
-? 选择你想使用的源 当前源
-安装依赖...
-这可能需要数分钟，请耐心等待.
-我们无法正确输出子进程的进度条，所以进程可能会看似未响应
-added 293 packages in 26s
-模板已成功生成!
-```
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-7faca8c480b85853fca02061b3c21fe4_MD5.jpeg)
 
-初始化目录结构如下
+3. 配置记录
 
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-d6c8fb22be4f418abf38ef344030fd7c~tplv-k3u1fbpfcp-zoom-in-crop-mark_1512_0_0_0.webp)
+|key|value|comment|
+|---|---|---|
+|记录类型|需选择“CNAME”|CNAME记录可以将\<username>.github.io指向购买的域名|
+|名称|可填写“www”或“blog”|这取决你网站的个人用途。如我填写“blog”时，shenbourne.github.io会指向blog.shenbourne.com|
+|目标|填写“\<username>.github.io”|此处username为GitHub用户名。例如我的用户名是shenbourne，则我填写“shenbourne.github.io”
 
-### 3.1 首页配置
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-ffe655d90d28fa9c9f4fb09e378236dd_MD5.jpeg)
 
-其中，src 目录下的 `README.md`即为博客或者文档的首页。
+填好后点击保存
 
-等待下载完毕，执行 `npm run docs:dev`
+4. 绑定到Github Pages：项目仓库 > Settings > Pages > Custom domain，在Custom domain中填写你在步骤2中配置好的域名，点击“Save”。
 
-打开页面，可以看到博客的首页如下：
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-4103fe51569ff733913576ed9068e648_MD5.jpeg)
 
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-adc22b537dca1536f0fb1e74f80eca9e_MD5.jpeg)
+GitHub会花费一点时间做DNS check，成功时你能看到成功的提示。
 
-可以通过设置`heroFullScreen: false`，关闭hero背景全屏。
+5. 再耐心等待一段时间（通常是十余分钟）后，在浏览器输入自定义的域名，即可打开你的博客
 
-下滑之后文章的列表如下：
+## 五、[搜索](https://theme-hope.vuejs.press/zh/guide/feature/search.html)功能
 
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-715154480d5ac408e5dad8b62398cd75_MD5.jpeg)
+该主题内置了几种常见搜索插件的支持，你只需下载你喜欢的插件和配置文件即可
 
-文章的列表来自于项目中所有的markdown文件，你可以在每个md文件的frontmatter中设置文章的标题、封面、分类、标签、日期、是否在文章列表中显示。
+### 1. `vuepress-plugin-search-pro`插件
 
-```md
----
-title: 🚀🚀vue3自定义指令实践
-isTimeLine: true
-date: 2023-07-03
-category:
-  - 前端
-tag:
-  - JavaScript
-  - Vue
----
-```
-
-
-通过设置`article` 为 `false`将文章在列表中排除。
-
-站点的基本信息、顶部的hero信息、项目链接、底部的footer信息都可以在`README.md`中配置。
-
-我的配置如下：具体可以参考：[博客主页 Frontmatter 配置 | vuepress-theme-hope](https://theme-hope.vuejs.press/zh/config/frontmatter/blog-home.html)
-
-```
-home: false
-layout: BlogHome
-icon: home
-title: 首页
-heroImage: /logo.svg
-heroText: 萌萌哒草头将军
-heroFullScreen: false
-tagline: 千里之行，始于足下
-projects:
-  - icon: react
-    name: RaETable
-    desc: 一款开箱即用的antd表格组件库
-    link: https://mmdctjj.github.io/raetable
-  - icon: setting
-    name: console-loader
-    desc: 自动清除其他开发者console的loader
-    link: https://github.com/mmdctjj/remove-others-console-loader
-
-
-footer: 萌萌哒草头将军
-
-```
-
-### 3.2 导航栏配置
-
-在开始之前你需要明确，你的导航栏需求是啥样的（大白话就是哪些栏目需要在侧边栏展示，哪些在侧边栏展示）
-
-我的思路是，根据文章的分类，将相同的分类文章放在同一目录下，每个目录对应一个导航栏目。
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-afe5a87db78a22a56906383692d3af57_MD5.jpeg)
-
-导航栏的相关设置在 `navbar.ts`文件中。
-
-默认为字符串，对应 src 目录下的文件路径，你可以省略 `.md` 扩展名，以 `/` 结尾的路径会被推断为 `/README.md`。
-
-例如：
-
-```js title="\src\.vuepress\navbar.ts"
-import { navbar } from "vuepress-theme-hope";
-
-export default navbar([
-  "/", // 对应首页，即src/README.md
-  '/react/', // 对应src/react/README.md
-]);
-
-```
-
-也可以是对象，基本格式如下：
-
-
-```js title="\src\.vuepress\navbar.ts"
-import { navbar } from "vuepress-theme-hope";
-
-export default navbar([
-  {
-    text: "博文",
-    icon: "pen-to-square",
-    prefix: "/posts/", // 对应 src/posts 目录
-    children: [
-      {
-        text: "苹果",
-        icon: "pen-to-square",
-        prefix: "apple/", // 对应 src/posts/apple 目录
-        children: [
-          { text: "苹果1", icon: "pen-to-square", link: "1" },
-          { text: "苹果2", icon: "pen-to-square", link: "2" },
-          "3",
-          "4",
-        ],
-      },
-      "tomato",
-      "strawberry",
-    ],
-  },
-  {
-    text: "V2 文档",
-    icon: "book",
-    link: "https://theme-hope.vuejs.press/zh/", // link代码外链地址
-  },
-]);
-
-```
-
-我的设置为：
-
-```js title="\src\.vuepress\navbar.ts"
-import { navbar } from "vuepress-theme-hope";
-
-export default navbar([
-  "/",
-  {
-    text: 'React系列',
-    icon: 'react',
-    link: '/react/'
-  },
-  {
-    text: 'Vue系列',
-    icon: 'vue',
-    link: '/vue/'
-  },
-  {
-    text: 'Vite系列',
-    icon: 'tool',
-    link: '/vite/'
-  },
-  {
-    text: '新框架尝鲜系列',
-    icon: 'geometry',
-    link: '/framework/'
-  },
-  {
-    text: '杂谈',
-    icon: 'article',
-    link: '/posts/'
-  },
-  {
-    text: '标签',
-    icon: 'tag',
-    link: '/tag/javascript/'
-  },
-  {
-    text: '分类',
-    icon: 'categoryselected',
-    link: '/category/前端/'
-  },
-  {
-    text: '时间轴',
-    icon: 'time',
-    link: '/timeline/'
-  },
-]);
-
-```
-
-我将一些默认的路由也加进了导航栏配置中，比如时间轴、标签、分类等。
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-9cc52ff1585e6e6202033698b3484606_MD5.jpeg)
-
-### 3.3 侧边栏配置
-
-侧边栏的配置在 `sidebar.ts`中
-
-侧边栏的配置，我们可以分两种情况：全局导航栏、根据每个导航栏栏目分离式导航栏。
-
-#### ① 全局侧边栏配置
-
-你可以设置侧边栏导航和导航栏的路由一一对应，这样就相当于是全局的侧边栏。
-
-对于侧边栏的具体条目，可以通过设置`children: "structure"`根据当前目录下的文件名称自动生成。
-
-
-```js title="\src\.vuepress\sidebar.ts"
-import { sidebar } from "vuepress-theme-hope";
-
-export default sidebar({
-  "/": [
-    "",
-    {
-      text: "React系列",
-      icon: "react",
-      prefix: "react/",
-      children: "structure",
-    },
-    {
-      text: "Vue系列",
-      icon: "vue",
-      prefix: "vue/",
-      children: "structure",
-    },
-    {
-      text: "Vite系列",
-      icon: "tool",
-      prefix: "vite/",
-      children: "structure",
-    },
-    {
-      text: "新框架尝鲜系列",
-      icon: "geometry",
-      prefix: "framework/",
-      children: "structure",
-    },
-    {
-      text: "杂谈",
-      icon: "study",
-      prefix: "posts/",
-      children: "structure",
-    },
-    // "intro",
-    // "slides",
-  ],
-});
-
-
-```
-
-此时页面侧边栏如下图
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-750678252dca76d05e961648cd4c4603_MD5.jpeg)
-
-#### ② 分离式导航栏
-
-分离式菜单配置更简洁，如下所示：当设置`structure`时，默认根据目录下的文件自动生成侧边栏。
-
-```js title="\src\.vuepress\sidebar.ts"
-import { sidebar } from "vuepress-theme-hope";
-
-export default sidebar({
-  "/react/":  "structure",
-  "/framework/":  "structure",
-  "/vite/":  "structure",
-  "/vue/":  "structure",
-  "/posts/":  "structure",
-});
-
-```
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-cc16a07b5d6cdcc2ce8bd805dfe53dd2_MD5.jpeg)
-
-#### ③ 自动生成目录页面
-
-另外，我们还根据文件夹下的文件列表自动为每个文件夹生成目录页面。我们只需要在`theme.ts`中添加如下设置。
-
-
-```js title="\src\.vuepress\theme.ts"
-plugins: {
-    autoCatalog: {
-      index: true
-    },
-}
-```
-
-就可以自动生成目录页面了。例如：
-
-![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-9b379d0629ac655174377c76c8f00c1d_MD5.jpeg)
-
-
-### 3.4 [搜索](https://theme-hope.vuejs.press/zh/guide/feature/search.html)功能
-
-该主题内置了几种常见搜索插件的支持，你只需下载你喜欢的插件和配置文件即可，我使用的是`vuepress-plugin-search-pro`插件，配置参考的官方配置。
+配置参考的官方配置。
 
 1. 安装 `vuepress-plugin-search-pro`
 
@@ -1304,6 +916,64 @@ export default defineUserConfig({
 
 ![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-fb8aa9698875c3683416ea56928db52b_MD5.jpeg)
 
+## 六、评论功能
+
+不同的插件，评论的实现原理不同，我接触过最早的原理是通过将评论信息映射到仓库的issue中。
+
+然而，后来开始流行`Discussions`，这也是`vuepress-theme-hope`推荐的方式，
+
+> 如果你的博客面向程序员，请使用`Giscus`，面向大众请选择`Waline`, 所以我选择了`Giscus`
+
+### 1. `Giscus`插件
+
+首先需要你创建一个空的仓库。其次，由于评论需要用户登录到GitHub，所以，我们还需要提供登录应用的服务。
+
+这里我们不用担心，因为Github为我们提供了简单的登陆应用的功能：`giscus`,
+
+首先安装Giscus：[GitHub Apps - giscus · GitHub](https://github.com/apps/giscus)
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-e13154e3efd91f784218615bc9adf9ca_MD5.jpeg)
+
+点击`install`按钮，在配置详情页中选择对应的生效仓库。（这里我选择仅仅对评论仓库生效）
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-ea99fa53fe4252254d77627d4f0bf988_MD5.jpeg)
+
+然后回到评论仓库，点击`seething`，选中`Feature`下的`Discussions`
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-a102162cac6499c56a4540d346d717fb_MD5.jpeg)
+
+点击`set up discussions`，默认的文本不需要修改，点击提交即可出现如下页面，说明该功能启用成功。
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-a6d3618658113f74ca726cee63af6663_MD5.jpeg)
+
+接着，我们前往[giscus.app/zh-CN](https://giscus.app/zh-CN) 设置你的仓库和分类
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-3cb268874b44a1c4aa62dbb4fd6d6496_MD5.jpeg)
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-bc8fc4bd00b33c61d4f728f3bb7e7527_MD5.jpeg)
+
+在启用栏目复制以下几个信息。
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-0a298ebbbc92b19922ed10f8f6cf4bdd_MD5.jpeg)
+
+接着将以下信息复到`theme.ts`即可：
+
+```js title="\src\.vuepress\theme.ts"
+  plugins: {
+    comment: {
+      // You should generate and use your own comment service
+      provider: "Giscus",
+      repo: "mmdctjj/blogs-comments",
+      repoId: "xxxx", // 替换下
+      category: "Announcements",
+      categoryId: "xxxx" // 替换下
+    },
+ }
+```
+
+此时当我们评论之后，在评论仓库查看，
+
+![](https://cdn.jsdelivr.net/gh/shenbourne/Image-Hosting-Service@main/blog/VuePress-theme-hope2-deploy-14d4de4f357aebc829a2a4840e049577_MD5.jpeg)
 
 ## 五、最后
 

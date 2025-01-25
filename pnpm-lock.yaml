@@ -8,6 +8,15 @@ devDependencies:
   '@vuepress/bundler-vite':
     specifier: 2.0.0-rc.19
     version: 2.0.0-rc.19(sass-embedded@1.83.0)
+  '@waline/client':
+    specifier: ^3.5.1
+    version: 3.5.1
+  katex:
+    specifier: ^0.16.21
+    version: 0.16.21
+  mathjax-full:
+    specifier: ^3.2.2
+    version: 3.2.2
   sass-embedded:
     specifier: ^1.83.0
     version: 1.83.0
@@ -19,7 +28,7 @@ devDependencies:
     version: 2.0.0-rc.19(@vuepress/bundler-vite@2.0.0-rc.19)(vue@3.5.13)
   vuepress-theme-hope:
     specifier: 2.0.0-rc.66
-    version: 2.0.0-rc.66(markdown-it@14.1.0)(sass-embedded@1.83.0)(vuepress@2.0.0-rc.19)
+    version: 2.0.0-rc.66(@waline/client@3.5.1)(katex@0.16.21)(markdown-it@14.1.0)(mathjax-full@3.2.2)(sass-embedded@1.83.0)(vuepress@2.0.0-rc.19)
 
 packages:
 
@@ -707,7 +716,7 @@ packages:
       upath: 2.0.1
     dev: true
 
-  /@mdit/plugin-katex-slim@0.14.0(markdown-it@14.1.0):
+  /@mdit/plugin-katex-slim@0.14.0(katex@0.16.21)(markdown-it@14.1.0):
     resolution: {integrity: sha512-GztODGcbbd+Glmwrin8yeR6KDESyFwxKkwe1u40XQ4vAImtOswQbAk5suoFGySiuONzGiu/4RLOKnYv5Unq3jQ==}
     engines: {node: '>= 18'}
     peerDependencies:
@@ -723,6 +732,7 @@ packages:
       '@mdit/plugin-tex': 0.14.0(markdown-it@14.1.0)
       '@types/katex': 0.16.7
       '@types/markdown-it': 14.1.2
+      katex: 0.16.21
       markdown-it: 14.1.0
     dev: true
 
@@ -739,7 +749,7 @@ packages:
       markdown-it: 14.1.0
     dev: true
 
-  /@mdit/plugin-mathjax-slim@0.14.0(markdown-it@14.1.0):
+  /@mdit/plugin-mathjax-slim@0.14.0(markdown-it@14.1.0)(mathjax-full@3.2.2):
     resolution: {integrity: sha512-AOFHQ5wN8IDV8d96MH3w9irHNguLtWbhYajQcc+O5wGeWxDsd5KMAd4StgERETxo6XgLxr0NRC8HzxSMPrC2aw==}
     engines: {node: '>= 18'}
     peerDependencies:
@@ -754,6 +764,7 @@ packages:
       '@mdit/plugin-tex': 0.14.0(markdown-it@14.1.0)
       '@types/markdown-it': 14.1.2
       markdown-it: 14.1.0
+      mathjax-full: 3.2.2
       upath: 2.0.1
     dev: true
 
@@ -1523,7 +1534,7 @@ packages:
       - typescript
     dev: true
 
-  /@vuepress/plugin-comment@2.0.0-rc.67(vuepress@2.0.0-rc.19):
+  /@vuepress/plugin-comment@2.0.0-rc.67(@waline/client@3.5.1)(vuepress@2.0.0-rc.19):
     resolution: {integrity: sha512-ebbX1LmDfexHC+2pw98QC+BXqK/5MdQ/OdGnZKp98023UR8Mg+7YcG4aT63hD2ngWtgU28lnBdy8wXHTecZzig==}
     peerDependencies:
       '@waline/client': ^3.4.1
@@ -1539,6 +1550,7 @@ packages:
         optional: true
     dependencies:
       '@vuepress/helper': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
+      '@waline/client': 3.5.1
       giscus: 1.5.0
       vue: 3.5.13
       vuepress: 2.0.0-rc.19(@vuepress/bundler-vite@2.0.0-rc.19)(vue@3.5.13)
@@ -1656,7 +1668,7 @@ packages:
       - typescript
     dev: true
 
-  /@vuepress/plugin-markdown-math@2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19):
+  /@vuepress/plugin-markdown-math@2.0.0-rc.66(katex@0.16.21)(markdown-it@14.1.0)(mathjax-full@3.2.2)(vuepress@2.0.0-rc.19):
     resolution: {integrity: sha512-X9N6IlgZfivJKv43j7Kpya2BHQs3U969FMvZNhSJmIrloqhAWlBPA6O97cL+P4jnid/obfp585rz9Ecc1/Qx1w==}
     peerDependencies:
       katex: ^0.16.10
@@ -1668,10 +1680,12 @@ packages:
       mathjax-full:
         optional: true
     dependencies:
-      '@mdit/plugin-katex-slim': 0.14.0(markdown-it@14.1.0)
-      '@mdit/plugin-mathjax-slim': 0.14.0(markdown-it@14.1.0)
+      '@mdit/plugin-katex-slim': 0.14.0(katex@0.16.21)(markdown-it@14.1.0)
+      '@mdit/plugin-mathjax-slim': 0.14.0(markdown-it@14.1.0)(mathjax-full@3.2.2)
       '@types/markdown-it': 14.1.2
       '@vuepress/helper': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
+      katex: 0.16.21
+      mathjax-full: 3.2.2
       vue: 3.5.13
       vuepress: 2.0.0-rc.19(@vuepress/bundler-vite@2.0.0-rc.19)(vue@3.5.13)
     transitivePeerDependencies:
@@ -1902,13 +1916,56 @@ packages:
       - typescript
     dev: true
 
+  /@vueuse/core@12.5.0:
+    resolution: {integrity: sha512-GVyH1iYqNANwcahAx8JBm6awaNgvR/SwZ1fjr10b8l1HIgDp82ngNbfzJUgOgWEoxjL+URAggnlilAEXwCOZtg==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 12.5.0
+      '@vueuse/shared': 12.5.0
+      vue: 3.5.13
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
   /@vueuse/metadata@12.0.0:
     resolution: {integrity: sha512-Yzimd1D3sjxTDOlF05HekU5aSGdKjxhuhRFHA7gDWLn57PRbBIh+SF5NmjhJ0WRgF3my7T8LBucyxdFJjIfRJQ==}
+    dev: true
+
+  /@vueuse/metadata@12.5.0:
+    resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
     dev: true
 
   /@vueuse/shared@12.0.0:
     resolution: {integrity: sha512-3i6qtcq2PIio5i/vVYidkkcgvmTjCqrf26u+Fd4LhnbBmIT6FN8y6q/GJERp8lfcB9zVEfjdV0Br0443qZuJpw==}
     dependencies:
+      vue: 3.5.13
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
+  /@vueuse/shared@12.5.0:
+    resolution: {integrity: sha512-vMpcL1lStUU6O+kdj6YdHDixh0odjPAUM15uJ9f7MY781jcYkIwFA4iv2EfoIPO6vBmvutI1HxxAwmf0cx5ISQ==}
+    dependencies:
+      vue: 3.5.13
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
+  /@waline/api@1.0.0-alpha.8:
+    resolution: {integrity: sha512-S6pgUUfv+gcXU3hiW3PNUwiUvPy7bXmmLB/bwdU3hN5YVT5Q7CxyVSLA3oJkrNO5lcisKK1GBPv0H2W1uB0eGA==}
+    engines: {node: '>=18'}
+    dev: true
+
+  /@waline/client@3.5.1:
+    resolution: {integrity: sha512-vwXPC5F1RA+Tcx+oNXW9HQ5cgPpzC19OriiO6yVDHXNb29Rs4/vSws/TD6AJQa1RgYKikFP05OLEtsHmNnTUJA==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@vueuse/core': 12.5.0
+      '@waline/api': 1.0.0-alpha.8
+      autosize: 6.0.1
+      marked: 15.0.6
+      marked-highlight: 2.2.1(marked@15.0.6)
+      recaptcha-v3: 1.11.3
       vue: 3.5.13
     transitivePeerDependencies:
       - typescript
@@ -1967,6 +2024,10 @@ packages:
       picocolors: 1.1.1
       postcss: 8.4.49
       postcss-value-parser: 4.2.0
+    dev: true
+
+  /autosize@6.0.1:
+    resolution: {integrity: sha512-f86EjiUKE6Xvczc4ioP1JBlWG7FKrE13qe/DxBCpe8GCipCq2nFw73aO8QEBKHfSbYGDN5eB9jXWKen7tspDqQ==}
     dev: true
 
   /balloon-css@1.2.0:
@@ -2131,6 +2192,16 @@ packages:
 
   /comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
+    dev: true
+
+  /commander@8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
+    dev: true
+
+  /commander@9.2.0:
+    resolution: {integrity: sha512-e2i4wANQiSXgnrBlIatyHtP1odfUp0BbV5Y5nEGbxtIrStkEOAAzCUirvLBNXHLr7kwLvJl6V+4V3XV9x7Wd9w==}
+    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /connect-history-api-fallback@2.0.0:
@@ -2340,6 +2411,11 @@ packages:
 
   /escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
+    engines: {node: '>=6'}
+    dev: true
+
+  /esm@3.2.25:
+    resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
     engines: {node: '>=6'}
     dev: true
 
@@ -2659,6 +2735,13 @@ packages:
       graceful-fs: 4.2.11
     dev: true
 
+  /katex@0.16.21:
+    resolution: {integrity: sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: true
+
   /kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
@@ -2744,6 +2827,29 @@ packages:
       uc.micro: 2.1.0
     dev: true
 
+  /marked-highlight@2.2.1(marked@15.0.6):
+    resolution: {integrity: sha512-SiCIeEiQbs9TxGwle9/OwbOejHCZsohQRaNTY2u8euEXYt2rYUFoiImUirThU3Gd/o6Q1gHGtH9qloHlbJpNIA==}
+    peerDependencies:
+      marked: '>=4 <16'
+    dependencies:
+      marked: 15.0.6
+    dev: true
+
+  /marked@15.0.6:
+    resolution: {integrity: sha512-Y07CUOE+HQXbVDCGl3LXggqJDbXDP2pArc2C1N1RRMN0ONiShoSsIInMd5Gsxupe7fKLpgimTV+HOJ9r7bA+pg==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: true
+
+  /mathjax-full@3.2.2:
+    resolution: {integrity: sha512-+LfG9Fik+OuI8SLwsiR02IVdjcnRCy5MufYLi0C3TdMT56L/pjB0alMVGgoWJF8pN9Rc7FESycZB9BMNWIid5w==}
+    dependencies:
+      esm: 3.2.25
+      mhchemparser: 4.2.1
+      mj-context-menu: 0.6.1
+      speech-rule-engine: 4.0.7
+    dev: true
+
   /mdast-util-to-hast@13.2.0:
     resolution: {integrity: sha512-QGYKEuUsYT9ykKBCMOEDLsU5JRObWQusAolFMeko/tYPufNkRffBAQjIE+99jbA87xv6FgmjLtwjh9wBWajwAA==}
     dependencies:
@@ -2765,6 +2871,10 @@ packages:
   /merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
+    dev: true
+
+  /mhchemparser@4.2.1:
+    resolution: {integrity: sha512-kYmyrCirqJf3zZ9t/0wGgRZ4/ZJw//VwaRVGA75C4nhE60vtnIzhl9J9ndkX/h6hxSN7pjg/cE0VxbnNM+bnDQ==}
     dev: true
 
   /micromark-util-character@2.1.1:
@@ -2809,6 +2919,10 @@ packages:
 
   /mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+    dev: true
+
+  /mj-context-menu@0.6.1:
+    resolution: {integrity: sha512-7NO5s6n10TIV96d4g2uDpG7ZDpIhMh0QNfGdJw/W47JswFcosz457wqz/b5sAKvl12sxINGFCn80NZHKwxQEXA==}
     dev: true
 
   /ms@2.1.3:
@@ -3046,6 +3160,10 @@ packages:
   /readdirp@4.0.2:
     resolution: {integrity: sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA==}
     engines: {node: '>= 14.16.0'}
+    dev: true
+
+  /recaptcha-v3@1.11.3:
+    resolution: {integrity: sha512-sEE6J0RzUkS+sKEBpgCD/AqCU0ffrAVOADGjvAx9vcttN+VLK42SWMkj/J/I6vHu3Kew+xcfbBqDVb65N0QGDw==}
     dev: true
 
   /regex-recursion@4.3.0:
@@ -3423,6 +3541,15 @@ packages:
   /speakingurl@14.0.1:
     resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /speech-rule-engine@4.0.7:
+    resolution: {integrity: sha512-sJrL3/wHzNwJRLBdf6CjJWIlxC04iYKkyXvYSVsWVOiC2DSkHmxsqOhEeMsBA9XK+CHuNcsdkbFDnoUfAsmp9g==}
+    hasBin: true
+    dependencies:
+      commander: 9.2.0
+      wicked-good-xpath: 1.3.0
+      xmldom-sre: 0.1.31
     dev: true
 
   /sprintf-js@1.0.3:
@@ -3817,7 +3944,7 @@ packages:
       - typescript
     dev: true
 
-  /vuepress-theme-hope@2.0.0-rc.66(markdown-it@14.1.0)(sass-embedded@1.83.0)(vuepress@2.0.0-rc.19):
+  /vuepress-theme-hope@2.0.0-rc.66(@waline/client@3.5.1)(katex@0.16.21)(markdown-it@14.1.0)(mathjax-full@3.2.2)(sass-embedded@1.83.0)(vuepress@2.0.0-rc.19):
     resolution: {integrity: sha512-ttZUDGzLVmOgkHtHqb5DjTtmVvG5VmQzZfn53lWNquml3y0EanqJy/OiHfT+anzMNiH+K1WK4Z1lP66TW9a3tQ==}
     engines: {node: '>=18.19.0', npm: '>=8', pnpm: '>=7', yarn: '>=2'}
     peerDependencies:
@@ -3865,7 +3992,7 @@ packages:
       '@vuepress/plugin-back-to-top': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-blog': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-catalog': 2.0.0-rc.67(vuepress@2.0.0-rc.19)
-      '@vuepress/plugin-comment': 2.0.0-rc.67(vuepress@2.0.0-rc.19)
+      '@vuepress/plugin-comment': 2.0.0-rc.67(@waline/client@3.5.1)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-copy-code': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-copyright': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-git': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
@@ -3874,7 +4001,7 @@ packages:
       '@vuepress/plugin-markdown-hint': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-markdown-image': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-markdown-include': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
-      '@vuepress/plugin-markdown-math': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
+      '@vuepress/plugin-markdown-math': 2.0.0-rc.66(katex@0.16.21)(markdown-it@14.1.0)(mathjax-full@3.2.2)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-markdown-stylize': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-markdown-tab': 2.0.0-rc.66(markdown-it@14.1.0)(vuepress@2.0.0-rc.19)
       '@vuepress/plugin-notice': 2.0.0-rc.66(vuepress@2.0.0-rc.19)
@@ -3974,6 +4101,10 @@ packages:
       isexe: 2.0.0
     dev: true
 
+  /wicked-good-xpath@1.3.0:
+    resolution: {integrity: sha512-Gd9+TUn5nXdwj/hFsPVx5cuHHiF5Bwuc30jZ4+ronF1qHK5O7HD0sgmXWSEgwKquT3ClLoKPVbO6qGwVwLzvAw==}
+    dev: true
+
   /wrap-ansi@6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
     engines: {node: '>=8'}
@@ -3981,6 +4112,11 @@ packages:
       ansi-styles: 4.3.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
+    dev: true
+
+  /xmldom-sre@0.1.31:
+    resolution: {integrity: sha512-f9s+fUkX04BxQf+7mMWAp5zk61pciie+fFLC9hX9UVvCeJQfNHRHXpeo5MPcR0EUf57PYLdt+ZO4f3Ipk2oZUw==}
+    engines: {node: '>=0.1'}
     dev: true
 
   /y18n@4.0.3:
