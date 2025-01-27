@@ -6,6 +6,7 @@ category:
   - 安装教程
 tag:
   - Synology
+  - NAS
 ---
 
 ## 准备工作：
