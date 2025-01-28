@@ -3,24 +3,40 @@ import { sidebar } from "vuepress-theme-hope";
 export default sidebar({
   "/": [
     "",
+    "intro",
     {
-      text: "如何使用",
-      icon: "laptop-code",
-      prefix: "demo/",
-      link: "demo/",
-      children: "structure",
-    },
-    {
-      text: "文章",
+      text: "笔记",
       icon: "book",
       prefix: "posts/",
+      collapsible: true,
       children: "structure",
     },
-    "intro",
+    {
+      text: "本地部署教程合集",
+      icon: "local",
+      prefix: "local/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "云端部署教程合集",
+      icon: "cloud",
+      prefix: "cloud/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "个人设备教程合集",
+      icon: "person",
+      prefix: "personal/",
+      collapsible: true,
+      children: "structure",
+    },
     {
       text: "幻灯片",
       icon: "person-chalkboard",
-      link: "https://ecosystem.vuejs.press/zh/plugins/markdown/revealjs/demo.html",
+      link: "https://plugin-md-enhance.vuejs.press/zh/guide/content/revealjs/demo.html",
     },
   ],
 });
+

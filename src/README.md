@@ -4,9 +4,9 @@ layout: BlogHome
 icon: home
 title: 博客主页
 heroImage: https://theme-hope-assets.vuejs.press/logo.svg
-heroText: 你博客的名称
+heroText: ShenBourne 的博客
 heroFullScreen: true
-tagline: 你可以在这里放置你的口号与标语
+tagline: Welcome to my blog!
 projects:
   - icon: project
     name: 项目名称
@@ -29,9 +29,9 @@ projects:
     link: https://你的文章链接
 
   - icon: friend
-    name: 伙伴名称
-    desc: 伙伴详细介绍
-    link: https://你的伙伴链接
+    name: Bruce-Tian
+    desc: Sharing techniques and ideas.
+    link: https://www.tkong.net/
 
   - icon: https://theme-hope-assets.vuejs.press/logo.svg
     name: 自定义项目
@@ -45,4 +45,4 @@ footer: 自定义你的页脚文字
 
 要使用此布局，你应该在页面前端设置 `layout: BlogHome` 和 `home: true`。
 
-相关配置文档请见 [博客主页](https://theme-hope.vuejs.press/zh/guide/blog/home.html)。
+相关配置文档请见 [博客主页](https://theme-hope.vuejs.press/zh/guide/blog/home/)。
